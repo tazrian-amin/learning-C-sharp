@@ -21,6 +21,7 @@ namespace ConsoleApp5
             count = _count;
             DeviceCount++;
         }
+
         public void sellDevice()
         {
             Console.Write($"Number of {name}s to sell: ");
@@ -42,6 +43,7 @@ namespace ConsoleApp5
             }
         }
     }
+
     internal class Program
     {
         static void Main(string[] args)

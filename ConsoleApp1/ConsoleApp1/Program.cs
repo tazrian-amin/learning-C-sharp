@@ -52,24 +52,31 @@ namespace ConsoleApp1
             int[] intArray = new int[] { 0, 1, 2, 3, 4, 5 }; //fixed size collection: Array
             Console.WriteLine("Array with length: " + intArray.Length);
 
-            List<int> intList = new List<int>() { 0, 1, 2, 3, 4 }; //dynamic size collection: List
-            Console.WriteLine("List with count: " + intList.Count);
+            List<int> numberList = new List<int>() { 0, 1, 2, 3, 4 }; //dynamic size collection: List
+            Console.WriteLine("List with count: " + numberList.Count);
 
-            intList.Add(5);
-            Console.WriteLine("Count after adding an element: " + intList.Count);
+            numberList.Add(5);
+            Console.WriteLine("Count after adding an element: " + numberList.Count);
 
-            intList.Remove(0);
-            Console.WriteLine("Count after removing an element: " + intList.Count);
+            numberList.Remove(0);
+            Console.WriteLine("Count after removing an element: " + numberList.Count);
 
             //loops (for any collection) - foreach, for, while, do-while
-            foreach (int p in intList)
+            List<int> squaredNumbers = numberList.Select(x => Convert.ToInt32(Math.Pow(x, 2))).ToList(); //using LINQ (Language Integrated Query)
+
+            foreach (int number in squaredNumbers)
+            {
+                Console.WriteLine(number);
+            }
+
+            foreach (int p in numberList)
             {
                 Console.WriteLine(p);
             }
 
-            for (int p = 0; p < intList.Count; p++)
+            for (int p = 0; p < numberList.Count; p++)
             {
-                Console.WriteLine("Index: " + p + ", Element: " + intList[p]);
+                Console.WriteLine("Index: " + p + ", Element: " + numberList[p]);
             }
 
             int q = 0;
@@ -90,6 +97,7 @@ namespace ConsoleApp1
             //use classes
             MyClass myClass = new MyClass();
             int accessMyInt = myClass.myInt;
+            accessMyInt = 5;
             Console.WriteLine("Accessed myInt:" +  accessMyInt);
 
 
@@ -142,6 +150,7 @@ namespace ConsoleApp1
             public void myFunction()
             {
                 //execute something
+                myBoolean = true;
             }
 
             public MyClass() {
