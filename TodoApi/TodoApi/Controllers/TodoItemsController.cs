@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
 
+//A controller is responsible for handling HTTP requests, processing them, and returning responses. It defines the API endpoints for an app, contains methods that handle different HTTP methods (GET, POST, PUT, DELETE) and map them to specific actions, like reading, creating, updating, or deleting.
+
 namespace TodoApi.Controllers;
 
 [Route("api/[controller]")]
@@ -17,17 +19,17 @@ public class TodoItemsController : ControllerBase
 
     // GET: api/TodoItems
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()
+    public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
     {
         return await _context.TodoItems
-            .Select(x => ItemToDTO(x))
+            .Select(x => ItemTo(x))
             .ToListAsync();
     }
 
     // GET: api/TodoItems/5
     // <snippet_GetByID>
     [HttpGet("{id}")]
-    public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
+    public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
     {
         var todoItem = await _context.TodoItems.FindAsync(id);
 
@@ -36,7 +38,7 @@ public class TodoItemsController : ControllerBase
             return NotFound();
         }
 
-        return ItemToDTO(todoItem);
+        return ItemTo(todoItem);
     }
     // </snippet_GetByID>
 
@@ -44,9 +46,9 @@ public class TodoItemsController : ControllerBase
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     // <snippet_Update>
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutTodoItem(long id, TodoItemDTO todoDTO)
+    public async Task<IActionResult> PutTodoItem(long id, TodoItem todo)
     {
-        if (id != todoDTO.Id)
+        if (id != todo.Id)
         {
             return BadRequest();
         }
@@ -57,8 +59,8 @@ public class TodoItemsController : ControllerBase
             return NotFound();
         }
 
-        todoItem.Name = todoDTO.Name;
-        todoItem.IsComplete = todoDTO.IsComplete;
+        todoItem.Name = todo.Name;
+        todoItem.IsComplete = todo.IsComplete;
 
         try
         {
@@ -77,12 +79,12 @@ public class TodoItemsController : ControllerBase
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     // <snippet_Create>
     [HttpPost]
-    public async Task<ActionResult<TodoItemDTO>> PostTodoItem(TodoItemDTO todoDTO)
+    public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todo)
     {
         var todoItem = new TodoItem
         {
-            IsComplete = todoDTO.IsComplete,
-            Name = todoDTO.Name
+            IsComplete = todo.IsComplete,
+            Name = todo.Name
         };
 
         _context.TodoItems.Add(todoItem);
@@ -91,7 +93,7 @@ public class TodoItemsController : ControllerBase
         return CreatedAtAction(
             nameof(GetTodoItem),
             new { id = todoItem.Id },
-            ItemToDTO(todoItem));
+            ItemTo(todoItem));
     }
     // </snippet_Create>
 
@@ -116,8 +118,8 @@ public class TodoItemsController : ControllerBase
         return _context.TodoItems.Any(e => e.Id == id);
     }
 
-    private static TodoItemDTO ItemToDTO(TodoItem todoItem) =>
-       new TodoItemDTO
+    private static TodoItem ItemTo(TodoItem todoItem) =>
+       new TodoItem
        {
            Id = todoItem.Id,
            Name = todoItem.Name,
