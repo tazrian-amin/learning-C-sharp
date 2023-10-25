@@ -72,6 +72,7 @@ namespace ConsoleApp5
             device2.sellDevice();
 
             Console.ResetColor();
+            Console.ReadKey();
 
         }
 

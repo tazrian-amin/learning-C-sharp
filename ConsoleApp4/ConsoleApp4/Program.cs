@@ -39,6 +39,7 @@ namespace ConsoleApp4
             string sentence = Console.ReadLine();
             int count = sentence.Split().Length;
             Console.WriteLine($"There are {count} words in your sentence.");
+            Console.ReadKey();
 
         }
     }
